@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chinese Text Analyzer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="wrap header-grid">
+      <!-- col sx (vuota: tiene il layout a 3 colonne) -->
+      <div></div>
+
+      <!-- col centro: icona info -->
+      <div class="header-center">
+        <a class="info-pill" href="guida.html" aria-label="Guida rapida">i</a>
+        <div class="hero-title">#Tag with Brollo</div>
+      </div>
+
+      <!-- col dx: logo grande in tondino -->
+      <div class="header-right">
+        <a class="logo-chind-badge" href="index.html" title="Chinese Text Analyzer">
+          <img src="images/logo_chind.png" alt="Chinese Text Analyzer">
+        </a>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="controls">
+        <label class="toggle toggle--on-dark" title="Mostra romanizzazione">
+          <input type="checkbox" id="romToggle"/>
+          <span class="slider"></span><span class="label">Romanizzazione</span>
+        </label>
+
+        <label class="toggle toggle--on-dark" title="Evidenzia combinazioni (≥2)">
+          <input type="checkbox" id="comboToggle"/>
+          <span class="slider"></span><span class="label">Tag Plurisillabici</span>
+        </label>
+
+        <label class="toggle toggle--on-dark" title="Mostra solo un blocco di testo affiancato alla sidebar">
+          <input type="checkbox" id="browseToggle" checked/>
+          <span class="slider"></span><span class="label">Sfoglia testo</span>
+        </label>
+      </div>
+
+      <!-- Drag & Drop + file input -->
+      <div class="u-row u-row--files">
+        <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Trascina qui .txt o .pdf">
+          <div class="dz-inner">
+            <div class="dz-title">Trascina qui un file</div>
+            <div class="dz-sub">.txt o .pdf (OCR pagina per pagina)</div>
+            <button type="button" class="btn dz-btn">Scegli file…</button>
+          </div>
+          <input type="file" id="fileInput" accept=".txt,.pdf" />
+        </div>
+        <div id="status" class="status"></div>
+      </div>
+
+      <!-- Barra unica (PDF pagine / testo a blocchi) -->
+      <div id="navControls" class="nav-controls">
+        <button id="navPrev" class="btn">◀︎</button>
+        <span id="navInfo" class="muted">—</span>
+        <button id="navNext" class="btn">▶︎</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app" id="appRoot">
+    <section id="text" class="text"></section>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="combo-head">
+        <h3>Dettagli</h3>
+        <div id="comboSwitchHost"></div>
+      </div>
+      <div class="hint">Clicca su un carattere o (se attive) su combinazioni per i dettagli.</div>
+      <div id="details"></div>
+
+      <div class="browse-controls" id="browseControls">
+        <button id="blockPrev" class="btn">◀︎ Bloc</button>
+        <span id="blockInfo" class="muted">—</span>
+        <button id="blockNext" class="btn">Bloc ▶︎</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <!-- sinistra -->
+      <div class="credits">
+        Prodotto nell'ambito del progetto
+        <a class="credits-link" href="https://research.uniroma1.it/chin-dictionary-brollos-dictionarium-sinico-latinum-linguistic-innovations-textual-connections-and"
+           target="_blank" rel="noopener">
+          <em>CHIN-DICTIONARY Brollo's Dictionarium sinico-latinum: linguistic innovations, textual connections, and trans-cultural translation</em>
+        </a>
+        (CUP B53D23029330001).
+      </div>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- destra -->
+      <div class="brand-col">
+        <div class="logos">
+          <a class="logo-badge" href="https://github.com/erasmdif/" target="_blank" rel="noopener" title="Erasmus+">
+            <img src="images/logo_erasmo.svg" alt="Erasmus+">
+          </a>
+          <a href="https://iso.web.uniroma1.it/" target="_blank" rel="noopener" title="Sapienza">
+            <img class="logo-sapienza" src="images/logo_sapienza.png" alt="Sapienza">
+          </a>
+        </div>
+        <div class="license">
+          <img class="cc-badge" src="images/cc_by-nc-sa.svg" alt="CC BY-NC-SA">
+        </div>
+        <div class="sources">
+          Dizionari consultati:
+          <a href="https://www.hanzihero.com/" target="_blank" rel="noopener">HanziHero</a> ·
+          <a href="https://www.mdbg.net/chinese/dictionary?page=cedict" target="_blank" rel="noopener">CC-EDICT</a> ·
+          <a href="https://www.zdic.net/" target="_blank" rel="noopener">Zdic</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
